@@ -202,14 +202,19 @@ void Dictionary::search() {
 	system("cls");
 	this->setCursorVisible(false);
 	// Vẽ khung từ điển
-	gotoxy(0, 0);  wcout << "+" << wstring(118, '-') << "+";
-	for (unsigned int i = 1; i < 29; i++) {
+	gotoxy(0, 0);
+	wcout << "+" << wstring(31, '-') << "-" << wstring(86, '-') << "+";
+	gotoxy(0, 1); wcout << L"|>> ";
+	gotoxy(119, 1); wcout << L"|";
+	gotoxy(0, 2);
+	wcout << "+" << wstring(31, '-') << "+" << wstring(86, '-') << "+";
+	for (unsigned int i = 3; i < 29; i++) {
 		gotoxy(0, i); wcout << L"|";
 		gotoxy(32, i); wcout << L"|";
 		gotoxy(119, i); wcout << L"|";
 	}
-	gotoxy(0, 29); wcout << "+" << wstring(118, '-') << "+";
-	gotoxy(1, 1); wcout << L">> ";
+	gotoxy(0, 29);
+	wcout << "+" << wstring(31, '-') << "+" << wstring(86, '-') << "+" << std::left;
 
 	// Lấy dữ liệu từ trong từ điển
 	vector<wstring> vectorWordSorted(this->dataWordSorted.begin(), this->dataWordSorted.end());
@@ -219,7 +224,7 @@ void Dictionary::search() {
 	while (true)
 	{
 		gotoxy(4, 1);
-		wcout << setw(28) << eng;
+		wcout << setw(115) << eng;
 
 		char ch = _getch();
 		fflush(stdin);
@@ -253,14 +258,14 @@ void Dictionary::search() {
 
 		transform(eng.begin(), eng.end(), eng.begin(), std::towlower);
 		size_t count = 0;
-		for (unsigned int i = 0; eng.length() != 0 && i < vectorWordSorted.size() && count < 27; i++)
+		for (unsigned int i = 0; eng.length() != 0 && i < vectorWordSorted.size() && count < 26; i++)
 		{
 			if (vectorWordSorted[i].length() >= eng.length() && vectorWordSorted[i].substr(0, eng.length()) == eng) {
 				// In từ tiếng anh
-				gotoxy(4, 2 + count);
+				gotoxy(4, 3 + count);
 				wcout << setw(28) << vectorWordSorted[i];
 				// In nghĩa
-				gotoxy(34, 2 + count);
+				gotoxy(34, 3 + count);
 				wcout << std::left << setw(85);
 				// Nếu dài quá thì cắt chuỗi
 				if (this->dataDictionary[vectorWordSorted[i]].size() > 85) {
@@ -276,9 +281,9 @@ void Dictionary::search() {
 			}
 		}
 		// Xóa những hàng không có dữ liệu
-		for (size_t i = count; i < 27; i++) {
-			gotoxy(4, 2 + i); wcout << setw(28) << "";
-			gotoxy(34, 2 + i); wcout << setw(85) << "";
+		for (size_t i = count; i < 26; i++) {
+			gotoxy(4, 3 + i); wcout << setw(28) << "";
+			gotoxy(34, 3 + i); wcout << setw(85) << "";
 		}
 	}
 }
@@ -287,23 +292,68 @@ void Dictionary::search() {
 void Dictionary::showFull()
 {
 	system("cls");
-	wcout << std::left
-		<< "| "
-		<< setw(30) << L"Từ"
-		<< "| "
-		<< setw(85) << L"Nghĩa"
-		<< "|" << endl;
-	wcout << "|" << wstring(118, '-') << "|" << endl;
-	for (auto word : this->dataDictionary)
-	{
-		wcout << std::left
-			<< "| "
-			<< setw(30) << word.first
-			<< "| "
-			<< setw(85) << word.second
-			<< "|" << endl;
+	this->setCursorVisible(false);
+	// Vẽ khung
+	gotoxy(0, 0);
+	wcout << "+" << wstring(31, '-') << "+" << wstring(86, '-') << "+";
+	gotoxy(0, 1);	gotoxy(0, 1); wcout << L"| Từ";
+	gotoxy(32, 1); wcout << L"| Nghĩa";
+	gotoxy(119, 1); wcout << L"|";
+	gotoxy(0, 2);
+	wcout << "+" << wstring(31, '-') << "+" << wstring(86, '-') << "+";
+	for (unsigned int i = 3; i < 29; i++) {
+		gotoxy(0, i); wcout << L"|";
+		gotoxy(32, i); wcout << L"|";
+		gotoxy(119, i); wcout << L"|";
 	}
-	_getch();
+	gotoxy(0, 29);
+	wcout << "+" << wstring(31, '-') << "+" << wstring(86, '-') << "+" << std::left;
+
+	// Lấy dữ liệu từ trong từ điển
+	vector<wstring> vectorWordSorted(this->dataWordSorted.begin(), this->dataWordSorted.end());
+
+	size_t start = 0;
+	while (true)
+	{
+		// In các từ trên 1 page
+		for (size_t i = 0; i < 26; i++) {
+			size_t count = 0;
+			size_t  index = start + i;
+			if (index < vectorWordSorted.size())
+			{
+				// In từ
+				gotoxy(2, 3 + i);
+				wcout << setw(30) << vectorWordSorted[index];
+				// In nghĩa
+				gotoxy(34, 3 + i);
+				wcout << std::left << setw(85);
+				// Nếu dài quá thì cắt chuỗi
+				if (this->dataDictionary[vectorWordSorted[index]].size() > 85) {
+					wcout << this->dataDictionary[vectorWordSorted[index]].substr(0, 80) + L" ... ";
+				}
+				else {
+					wcout << this->dataDictionary[vectorWordSorted[index]];
+				}
+			}
+			else {
+				gotoxy(2, 3 + i); wcout << setw(30) << "";
+				gotoxy(34, 3 + i); wcout << setw(85) << "";
+			}
+		}
+
+		char key = _getch();
+		if (key == 27) {
+			break;
+		}
+		else if (key == 77 && start + 26 < vectorWordSorted.size()) {
+			start += 26;
+		}
+		else if (key == 75 && start >= 26) {
+			start -= 26;
+		}
+	}
+
+
 }
 
 // Cho phép hiện thị con trỏ nhập hay không (true là hiện)
@@ -421,22 +471,73 @@ void Dictionary::menu() {
 			renderMenu(line, vectorMenu);
 			break;
 		case 77: // Phím mũi tên phải
-			handleChooseMenu(line);
-			setCursorVisible(false);
-			renderMenu(line, vectorMenu);
+			if (line == 5) {
+				isExit = true;
+			}
+			else
+			{
+				handleChooseMenu(line);
+				setCursorVisible(false);
+				system("cls");
+				this->renderBorderMenu(vectorSize);
+				this->renderMenu(line, vectorMenu);
+			}
 			break;
 		case 27: // ESC
 			isExit = true;
 			break;
 		case 13: // Enter
-			handleChooseMenu(line);
+			if (line == 5) {
+				isExit = true;
+			}
+			else
+			{
+				handleChooseMenu(line);
+				setCursorVisible(false);
+				system("cls");
+				this->renderBorderMenu(vectorSize);
+				this->renderMenu(line, vectorMenu);
+			}
+			break;
+		case '1':
+			handleChooseMenu(0);
 			setCursorVisible(false);
 			system("cls");
 			this->renderBorderMenu(vectorSize);
-			this->renderMenu(line, vectorMenu);
+			this->renderMenu(0, vectorMenu);
+			break;
+		case '2':
+			handleChooseMenu(1);
+			setCursorVisible(false);
+			system("cls");
+			this->renderBorderMenu(vectorSize);
+			this->renderMenu(1, vectorMenu);
+			break;
+		case '3':
+			handleChooseMenu(2);
+			setCursorVisible(false);
+			system("cls");
+			this->renderBorderMenu(vectorSize);
+			this->renderMenu(2, vectorMenu);
+			break;
+		case '4':
+			handleChooseMenu(3);
+			setCursorVisible(false);
+			system("cls");
+			this->renderBorderMenu(vectorSize);
+			this->renderMenu(3, vectorMenu);
+			break;
+		case '5':
+			handleChooseMenu(4);
+			setCursorVisible(false);
+			system("cls");
+			this->renderBorderMenu(vectorSize);
+			this->renderMenu(4, vectorMenu);
+			break;
+		case '0':
+			isExit = true;
 			break;
 		}
-
 	}
 }
 
