@@ -1,24 +1,3 @@
-candy
-kẹo
-
-considerable
-(adj) lớn lao, to tát, đáng kể
-
-chair
-(n) ghế
-
-unacceptable
-(adj) không thể chấp nhận,không tán thành, không thể tha thứ
-
-unable
-(adj) không có năng lực, không có tài
-
-muscle
-(n) cơ, bắp thịt
-
-combination
-(n) sự kết hợp, sự phối hợp
-
 all
 (n) (adv) tất cả
 
@@ -31,26 +10,47 @@ coldly
 in addition (to)
 thêm vào
 
-appeal
-(n) (v) sự kêu gọi, lời kêu gọi; kêu gọi, cầu khẩn
-
-add
-(v) cộng, thêm vào
-
-nice
-(adj) đẹp, thú vị, dễ chịu
-
-working
-(adj) sự làm, sự làm việc
-
-witness
-(n) (v) sự làm chứng, bằng chứng; chứng kiến, làm chứng
+abandon
+(v) bỏ, từ bỏ
 
 afraid
 (adj) sợ, sợ hãi, hoảng sợ
 
-abandon
-(v) bỏ, từ bỏ
+witness
+(n) (v) sự làm chứng, bằng chứng; chứng kiến, làm chứng
+
+working
+(adj) sự làm, sự làm việc
+
+nice
+(adj) đẹp, thú vị, dễ chịu
+
+add
+(v) cộng, thêm vào
+
+appeal
+(n) (v) sự kêu gọi, lời kêu gọi; kêu gọi, cầu khẩn
+
+combination
+(n) sự kết hợp, sự phối hợp
+
+muscle
+(n) cơ, bắp thịt
+
+unable
+(adj) không có năng lực, không có tài
+
+unacceptable
+(adj) không thể chấp nhận,không tán thành, không thể tha thứ
+
+chair
+(n) ghế
+
+considerable
+(adj) lớn lao, to tát, đáng kể
+
+candy
+kẹo
 
 whenever
 (conj) bất cứ lúc nào, lúc nào
